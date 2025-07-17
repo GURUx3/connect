@@ -1,24 +1,15 @@
 import express from "express";
-import cors from "cors"
-import { Request, Response } from "express";
-import dotenv from "dotenv";
-import authRoutes from "./routes/auth.routes";
+import cors from "cors";
+import authRouter from "../src/routes/auth.routes"; // adjust path as needed
 
-const PORT = process.env.PORT || 3000;
 const app = express();
-app.use(express.json());
+const PORT = 5000;
 
-app.use(cors())
+app.use(cors());
+app.use(express.json()); // needed to parse JSON body
 
-// this is an middleware used to parse (extract) the html form data from the post request
-app.use(express.urlencoded({ extended: true }));
-
-app.get("/", (req: Request, res: Response) => {
-  res.send("Hello World");
-});
-
-app.use("/api/auth", authRoutes);
+app.use("/api/auth", authRouter);
 
 app.listen(PORT, () => {
-  console.log(`App is Running on PORT :  http://localhost:${PORT}`);
+  console.log(`Server running at http://localhost:${PORT}`);
 });
